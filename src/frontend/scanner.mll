@@ -1,13 +1,13 @@
 {
-  open Core.Std
   open Parser
-  open Exceptions
+  open Fe_exceptions
   let lineno = ref 1
   let depth = ref 0
-  let filename = ref "" (* what do with this *)
+  let filename = "" (* what do with this *)
 
   let unescape s =
     Scanf.sscanf ("\"" ^ s ^ "\"") "%S%!" (fun x -> x)
+  let ctx () = (filename, !lineno)
 }
 
 (* char class regexes *)
@@ -118,7 +118,7 @@ rule token = parse
 (* literals *)
   | "true" | "false" as tf  { BOOL_LIT(bool_of_string tf) } 
   | int as i                { INT_LIT(int_of_string i) }
-  | float as f              { FLOAT_LIT(Float.of_string f) }
+  | float as f              { FLOAT_LIT(float_of_string f) }
   | string                  { STRING_LIT(unescape s)}
   | id as n                 { ID(n) }
   | '_'                     { UNDERSCORE }
@@ -126,8 +126,8 @@ rule token = parse
   | eof       { EOF }
 
 (* The Reign of Error *)
-  | '"'       { raise (Exceptions.UnmatchedQuotation(!lineno)) }
-  | _ as e    { raise (Exceptions.IllegalCharacter(!filename, e, !lineno)) }
+  | '"'       { raise (Fe_exceptions.UnmatchedQuotation(ctx ())) }
+  | _ as e    { raise (Fe_exceptions.IllegalCharacter(ctx (), e)) }
 
 (* comments *)
 and comment = parse
