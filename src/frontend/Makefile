@@ -9,7 +9,7 @@ DEP_OBJ=$(DEP_SRC:%.mli=%.cmi)
 AST_SRC=ast.mli
 AST_OBJ=$(AST_SRC:%.mli=%.cmi)
 
-GEN=
+GEN= # to be cleaned
 
 .PHONY: default clean
 default: $(TARGETS)
@@ -25,6 +25,7 @@ GEN += parser.mli parser.ml
 parser.mli parser.ml: parser.mly
 	$(YACC) $<
 parser.cmi: ast.cmi fe_exceptions.cmi
+
 
 # general-purpose rules
 %.cmo %.cmx: %.ml
