@@ -1,19 +1,15 @@
-TARGETS=scanner.cmo parser.cmo
+TARGETS ?= scanner.cmo parser.cmo
 
-OCAMLC=ocamlc
-OCAMLC_FLAGS=-I ../src/include -g
-LEX=ocamllex
-YACC=ocamlyacc
-DEP_SRC=exceptions.mli
-DEP_OBJ=$(DEP_SRC:%.mli=%.cmi)
-AST_SRC=ast.mli
-AST_OBJ=$(AST_SRC:%.mli=%.cmi)
+OCAMLC = ocamlc
+OCAMLC_FLAGS = -g
+LEX = ocamllex
+YACC = ocamlyacc
 
-GEN= # to be cleaned
+GEN :=
+PHONY :=
 
-.PHONY: default clean
+PHONY += default
 default: $(TARGETS)
-
 
 GEN += scanner.ml
 scanner.ml: scanner.mll
@@ -37,5 +33,8 @@ parser.cmi: ast.cmi fe_exceptions.cmi
 %.output: %.mly
 	$(YACC) -v $<
 
+PHONY += clean
 clean:
 	rm -rf *.cmx *.cmi *.cmo *.o $(TARGETS) $(GEN)
+
+.PHONY: $(PHONY)
