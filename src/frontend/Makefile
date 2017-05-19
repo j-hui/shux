@@ -1,4 +1,4 @@
-TARGETS=scanner.cmo
+TARGETS=scanner.cmo parser.cmo
 
 OCAMLC=ocamlc
 OCAMLC_FLAGS=-I ../src/include -g
