@@ -1,4 +1,4 @@
-TARGETS ?= scanner.cmo parser.cmo
+TARGETS ?= scanner.cmo parser.cmo astprint.cmo
 
 OCAMLC = ocamlc
 OCAMLC_FLAGS = -g
@@ -22,6 +22,7 @@ parser.mli parser.ml: parser.mly
 	$(YACC) $<
 parser.cmi: ast.cmi fe_exceptions.cmi
 
+astprint.cmo: ast.cmi
 
 # general-purpose rules
 %.cmo %.cmx: %.ml
