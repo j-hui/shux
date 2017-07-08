@@ -61,7 +61,6 @@ struct_def:
   | struct_def val_decl SEMI                { $2::$1 }
   | val_decl SEMI                           { [$1] }
 
-
 /* function declaration rules */
 fn_section:
   | fn_decls                                { List.rev $1 }
