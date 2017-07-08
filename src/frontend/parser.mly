@@ -7,7 +7,7 @@
 %token ASSIGN ADD_ASN SUB_ASN MUL_ASN DIV_ASN MOD_ASN EXP_ASN
 %token LOG_AND LOG_OR LOG_NOT LT GT EQ NEQ LEQ GEQ
 %token QUES COLON FILTER MAP ARROW IF THEN ELIF ELSE FOR WHILE DO
-%token NS GN KN STRUCT EXTERN VAR INT_T FLOAT_T STRING_T BOOL_T VECTOR_T PTR_T
+%token NS GN KN STRUCT EXTERN VAR INT_T FLOAT_T STRING_T BOOL_T PTR_T
 %token UNDERSCORE LET /* unused */
 
 %token <bool> BOOL_LIT
@@ -29,7 +29,6 @@ program:
 ns:
   | ns_section let_section fn_section       { ($1, $2, $3) }
 
-
 /* namespace declaration rules */
 ns_section:
   | ns_decls                                { List.rev $1 }
@@ -41,7 +40,6 @@ ns_decls:
 
 ns_decl:
   | NS ID ASSIGN LBRACE ns RBRACE           { {nname = $2; nbody = $5} }
-
 
 /* let declaration rules */
 let_section:
@@ -202,7 +200,6 @@ id_expr:
   | id_ns DOTDOT INT_LIT                       { Lookback($1, $3) }
   | id_ns                                      { Id($1) }
 
-
 /* function argument rules */
 formals:
   | formal_list                             { $1 }
@@ -263,7 +260,6 @@ iter_type:
   | FOR                                     { For }
   | DO                                      { Do }
 
-
 /* type rules */
 val_decl:
   | typ ID                                  { Bind(Immutable, $1, $2) }
@@ -283,10 +279,6 @@ primitive_t:
   | STRING_T                                { String }
   | BOOL_T                                  { Bool }
   | PTR_T                                   { Ptr }
-  | vector_t                                { $1 }
-
-vector_t:
-  | VECTOR_T LT INT_LIT GT                  { Vector($3) }
 
 fn_type:
   | GN                                      { Gn }
@@ -296,12 +288,10 @@ decl_mod:
   | VAR                                     { Mutable }
   | /* nothing, val */                      { Immutable }
 
-
 /* literal syntax rules */
 lit:
   | struct_lit                              { $1 } 
   | array_lit                               { $1 }
-  | vector_lit                              { $1 }
   | STRING_LIT                              { LitStr($1) }
   | BOOL_LIT                                { LitBool($1) }
   | FLOAT_LIT                               { LitFloat($1) }
@@ -321,9 +311,6 @@ struct_lit_field:
 array_lit:
   | LBRACK lit_elements RBRACK              { LitArray(List.rev $2) }
   | LBRACK RBRACK                           { LitArray([]) }
-
-vector_lit:
-  | LPAREN lit_elements COMMA expr RPAREN   { LitVector(List.rev ($4 :: $2)) }
 
 lit_elements:
   | lit_elements COMMA expr                 { $3::$1 }

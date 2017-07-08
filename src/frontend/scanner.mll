@@ -112,7 +112,6 @@ rule token = parse
   | "scalar" | "float"  { FLOAT_T }
   | "string"            { STRING_T }
   | "bool"              { BOOL_T }
-  | "vector"            { VECTOR_T }
   | "_ptr"              { PTR_T }
 
 (* literals *)

@@ -13,8 +13,8 @@ PHONY += default
 default: $(TARGETS)
 
 PHONY += build_all clean_all
-build_all: frontend.build # backend.build
-clean_all: frontend.clean # backend.clean
+build_all: frontend.build # frontend.build
+clean_all: frontend.clean # frontend.clean
 
 %.build:
 	$(MAKE) -C $(@:%.build=%)
