@@ -15,7 +15,6 @@ type typ =
   | Bool
   | Struct of id (* struct identifier *)
   | Array of typ * int option (* TODO: see if the size is still strictly necessary *)
-  | Vector of int (* fixed number of float elements in vector *)
   | Ptr
   | Void
 
@@ -44,7 +43,6 @@ and lit =
   | LitBool of bool
   | LitStr of string
   | LitKn of lambda
-  | LitVector of expr list
   | LitArray of expr list (* include optional type annotation here? *)
   | LitStruct of id * struct_field list (* should this be more sophisticated? *)
 

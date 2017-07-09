@@ -27,7 +27,6 @@ let rec _string_of_typ = function
   | Ptr -> "_ptr"
   | Struct t -> "struct " ^ string_of_id t 
   | Array(t, i) -> _string_of_typ t ^ "[" ^ (match i with Some(n) -> string_of_int n | None -> "") ^ "]"
-  | Vector t -> "vector<" ^ string_of_int t ^ ">"
   | Void -> "__void__" (* should not be used *)
 
 let string_of_typ x = string_of_opt _string_of_typ x
@@ -117,7 +116,6 @@ and string_of_lit = function
   | LitBool(l) -> string_of_bool l
   | LitStr(l) -> "\"" ^ l ^ "\""
   | LitKn(l) -> string_of_lambda l
-  | LitVector(l) -> string_of_list string_of_expr l "<" ", " ">" true
   | LitArray(l) -> string_of_list string_of_expr l "[" ", " "]" true
   | LitStruct(id, l) -> string_of_id id ^ string_of_list string_of_struct_field l "{" ";\n" "}" true
 
