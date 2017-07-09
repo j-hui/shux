@@ -116,7 +116,6 @@ and string_of_lit = function
   | LitBool(l) -> string_of_bool l
   | LitStr(l) -> "\"" ^ l ^ "\""
   | LitKn(l) -> string_of_lambda l
-  | LitVector(l) -> string_of_list string_of_expr l "<" ", " ">" true
   | LitArray(l) -> string_of_list string_of_expr l "[" ", " "]" true
   | LitStruct(id, l) -> string_of_id id ^ string_of_list string_of_struct_field l "{" ";\n" "}" true
 
